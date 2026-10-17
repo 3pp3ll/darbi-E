@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1F6F63">
+<style>:root{padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>دربي للإنجليزي</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Layout: one-column phone app, bottom tab bar, content cards set like a study notebook; English always in Lexend, LTR */
+:root{
+  --bg:#EEF2F0; --surface:#FFFFFF; --ink:#16302B; --muted:#5B6E69; --line:#D3DDD9;
+  --teal:#1F6F63; --teal-soft:#DCEBE7; --sun:#E8A317; --sun-soft:#FBEFD2;
+  --good:#2E8B57; --bad:#C0392B; --bad-soft:#F7DEDA;
+  --f-ar:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --f-en:"Lexend","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1A18; --surface:#172623; --ink:#E4EEEB; --muted:#93A8A2; --line:#2A3E3A;
+  --teal:#5CC2B0; --teal-soft:#1D3B36; --sun:#F2B940; --sun-soft:#3A3018;
+  --good:#5BC489; --bad:#E5756A; --bad-soft:#3E2422; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1A18; --surface:#172623; --ink:#E4EEEB; --muted:#93A8A2; --line:#2A3E3A;
+  --teal:#5CC2B0; --teal-soft:#1D3B36; --sun:#F2B940; --sun-soft:#3A3018;
+  --good:#5BC489; --bad:#E5756A; --bad-soft:#3E2422; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ar);font-size:16px;line-height:1.6}
+*{box-sizing:border-box}
+.app{max-width:560px;margin:0 auto;min-height:100%;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(96px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+.en{font-family:var(--f-en);direction:ltr;unicode-bidi:isolate;text-align:left}
+h1,h2,h3{margin:0;text-wrap:balance;line-height:1.3}
+h1{font-size:1.5rem} h2{font-size:1.2rem} h3{font-size:1.05rem}
+p{margin:0}
+.muted{color:var(--muted);font-size:.9rem}
+.eyebrow{font-size:.78rem;color:var(--teal);font-weight:700;letter-spacing:.02em}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lvl-pill{font-family:var(--f-en);font-weight:600;background:var(--teal);color:var(--bg);border-radius:999px;padding:4px 12px;font-size:.9rem;border:0;cursor:pointer}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.hero{background:var(--teal-soft);border:0}
+.btn{font:inherit;font-weight:600;border-radius:12px;padding:12px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:48px}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.btn.sun{background:var(--sun);border-color:var(--sun);color:#2A1E00}
+.btn:focus-visible,.tab:focus-visible,.opt:focus-visible,.lvl-pill:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>.btn{flex:1 1 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:right;font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:4px;min-height:96px}
+.tile b{font-size:1.05rem}
+.tile .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:auto}
+.tile .bar i{display:block;height:100%;background:var(--teal)}
+.speak{width:44px;height:44px;flex:none;border-radius:50%;border:0;background:var(--sun-soft);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.speak svg{width:22px;height:22px}
+.phrase{display:flex;gap:12px;align-items:flex-start;padding-block:12px;border-bottom:1px solid var(--line)}
+.phrase:last-child{border-bottom:0}
+.phrase .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.phrase .en{font-size:1.08rem;font-weight:500}
+.chk{font:inherit;font-size:.8rem;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:4px 10px;cursor:pointer;align-self:flex-start;min-height:32px}
+.chk.on{background:var(--good);border-color:var(--good);color:var(--bg)}
+.opt{font:inherit;text-align:left;direction:ltr;font-family:var(--f-en);background:var(--surface);border:1.5px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 14px;cursor:pointer;min-height:48px}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--surface))}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--sun);transition:width .3s}
+.flash{min-height:180px;justify-content:center;align-items:center;text-align:center;cursor:pointer}
+.flash .big{font-family:var(--f-en);font-size:1.6rem;font-weight:600;direction:ltr}
+.passage{font-family:var(--f-en);direction:ltr;text-align:left;font-size:1.05rem;line-height:1.8}
+.passage span.w{cursor:pointer;border-bottom:1px dotted var(--muted)}
+textarea{font-family:var(--f-en);direction:ltr;font-size:1rem;width:100%;min-height:120px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);color:var(--ink);resize:vertical}
+input[type=text]{font-family:var(--f-en);direction:ltr;font-size:1rem;flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);color:var(--ink)}
+.feedback{background:var(--sun-soft);border-radius:12px;padding:12px;white-space:pre-wrap;font-size:.95rem}
+.bubble{max-width:85%;padding:10px 14px;border-radius:14px;font-family:var(--f-en);direction:ltr;text-align:left}
+.bubble.bot{background:var(--teal-soft);align-self:flex-end;border-end-end-radius:4px}
+.bubble.me{background:var(--sun-soft);align-self:flex-start;border-end-start-radius:4px}
+.chat{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto}
+.back{font:inherit;background:none;border:0;color:var(--teal);font-weight:700;cursor:pointer;padding:8px 0;align-self:flex-start}
+nav.tabs{position:fixed;inset:auto 0 0 0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));z-index:5}
+.tab{font:inherit;font-size:.78rem;flex:1;max-width:140px;background:none;border:0;color:var(--muted);padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.tab svg{width:24px;height:24px}
+.tab.on{color:var(--teal);font-weight:700}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:.9rem;z-index:9;max-width:90%}
+.steps{display:flex;gap:8px}
+.steps span{flex:1;text-align:center;font-size:.8rem;padding:6px;border-radius:8px;background:var(--bg);color:var(--muted)}
+.steps span.on{background:var(--teal);color:var(--bg);font-weight:700}
+.result-num{font-family:var(--f-en);font-size:3rem;font-weight:600;color:var(--teal);line-height:1}
+select{font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.wd{font-family:var(--f-en);padding:1px 4px;border-radius:4px}
+.wd.ok{background:color-mix(in srgb,var(--good) 22%,transparent)}
+.wd.miss{background:var(--bad-soft);text-decoration:underline wavy var(--bad)}
+.btn.mic{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.btn.mic.live{animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="app" id="app" dir="rtl" lang="ar"></div>
+<nav class="tabs" dir="rtl" id="tabs" aria-label="الأقسام"></nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ============ المحتوى ============
+   لإضافة لغة جديدة: أضف مفتاح جديد في COURSES (مثل "fr") بنفس البنية، مع ttsLang.
+*/
+const COURSES = {
+ en: {
+  name:"الإنجليزية", ttsLang:"en-US",
+  levels:{
+   A1:{title:"مبتدئ", desc:"تحيات، تعريف بنفسك، طلبات بسيطة",
+    phrases:[
+     ["Hi, my name is Sara.","مرحبا، اسمي سارة."],
+     ["Nice to meet you.","تشرفت بمعرفتك."],
+     ["How are you?","كيف حالك؟"],
+     ["I'm fine, thank you.","أنا بخير، شكرًا."],
+     ["Where are you from?","من وين أنت؟"],
+     ["I'm from Saudi Arabia.","أنا من السعودية."],
+     ["Can you repeat that, please?","ممكن تعيد، لو سمحت؟"],
+     ["I don't understand.","ما فهمت."],
+     ["How much is this?","بكم هذا؟"],
+     ["I would like a coffee, please.","أبغى قهوة لو سمحت."],
+     ["Where is the bathroom?","وين دورة المياه؟"],
+     ["See you tomorrow.","أشوفك بكرة."]
+    ],
+    words:[["water","موية"],["food","أكل"],["family","عائلة"],["friend","صديق"],["house","بيت"],["car","سيارة"],["work","شغل"],["today","اليوم"],["tomorrow","بكرة"],["big","كبير"],["small","صغير"],["happy","سعيد"]],
+    reading:{title:"My Day",text:"My name is Omar. I live in Riyadh with my family. I wake up at seven o'clock. I drink tea and eat bread. I go to work by car. I work in an office. In the evening, I play football with my friends. I go to bed at eleven.",
+     qs:[["Where does Omar live?",["In Jeddah","In Riyadh","In Dubai"],1],["How does he go to work?",["By bus","By car","On foot"],1],["What does he do in the evening?",["He plays football","He reads a book","He cooks dinner"],0]]},
+    writing:["Write 3 sentences about yourself: your name, where you live, and your job.","Write what you eat for breakfast.","Write about your family in 3 sentences."],
+    chat:"You are a friendly cafe worker. Greet the learner and take their order."
+   },
+   A2:{title:"أساسي", desc:"تسوق، مواعيد، اتجاهات، الماضي البسيط",
+    phrases:[
+     ["Could you help me, please?","ممكن تساعدني لو سمحت؟"],
+     ["I'm looking for the train station.","أدور على محطة القطار."],
+     ["Turn left at the traffic light.","لف يسار عند الإشارة."],
+     ["Do you have this in a bigger size?","عندكم هذا بمقاس أكبر؟"],
+     ["Can I pay by card?","أقدر أدفع بالبطاقة؟"],
+     ["What time does it open?","متى يفتح؟"],
+     ["I'd like to book a table for two.","أبغى أحجز طاولة لشخصين."],
+     ["I went to the mall yesterday.","رحت المول أمس."],
+     ["What did you do last weekend?","وش سويت نهاية الأسبوع الماضي؟"],
+     ["I'm sorry, I'm late.","آسف، تأخرت."],
+     ["It's on the second floor.","هو في الدور الثاني."],
+     ["How long does it take?","كم ياخذ وقت؟"]
+    ],
+    words:[["cheap","رخيص"],["expensive","غالي"],["receipt","فاتورة"],["appointment","موعد"],["street","شارع"],["near","قريب"],["far","بعيد"],["yesterday","أمس"],["usually","عادةً"],["weather","الطقس"],["hungry","جوعان"],["tired","تعبان"]],
+    reading:{title:"A Weekend Trip",text:"Last weekend, Lina and her sister drove to Al-Ula. The trip took about four hours. They stayed in a small hotel near the old town. On Saturday, they visited the famous rocks and took many photos. The weather was warm during the day but cold at night. They ate dinner at a local restaurant. Lina wants to go back next year.",
+     qs:[["Who went with Lina?",["Her friend","Her sister","Her mother"],1],["How was the weather at night?",["Hot","Rainy","Cold"],2],["What does Lina want to do?",["Go back next year","Buy a house there","Never travel again"],0]]},
+    writing:["Write about what you did last weekend (4 sentences).","Write a short message to a friend inviting them to dinner.","Describe your favorite place in your city."],
+    chat:"You are a shop assistant in a clothing store. Help the learner find a shirt and talk about size and price."
+   },
+   B1:{title:"متوسط", desc:"آراء، خطط، مشاكل يومية، العمل",
+    phrases:[
+     ["In my opinion, it's a good idea.","برأيي، هي فكرة حلوة."],
+     ["I'm thinking about changing my job.","أفكر أغير شغلي."],
+     ["Would you mind closing the window?","تمانع تسكر الشباك؟"],
+     ["I've been learning English for a year.","لي سنة أتعلم إنجليزي."],
+     ["That makes sense.","هذا منطقي."],
+     ["I'm not sure I agree with you.","مو متأكد إني أوافقك."],
+     ["Let me think about it.","خلني أفكر فيها."],
+     ["There seems to be a problem with my order.","يبدو فيه مشكلة في طلبي."],
+     ["I'm looking forward to it.","متحمس لها / أنتظرها."],
+     ["It depends on the situation.","يعتمد على الموقف."],
+     ["Could we reschedule the meeting?","نقدر نأجل الاجتماع لوقت ثاني؟"],
+     ["I'll get back to you soon.","برجع لك قريب."]
+    ],
+    words:[["although","مع أن"],["experience","خبرة / تجربة"],["improve","يحسّن"],["confident","واثق"],["decision","قرار"],["suggest","يقترح"],["available","متاح"],["deadline","موعد التسليم"],["complain","يشتكي"],["meanwhile","في الأثناء"],["achieve","يحقق"],["opportunity","فرصة"]],
+    reading:{title:"Learning to Speak",text:"Many people can read English well but feel nervous when they have to speak. Faisal was one of them. He understood movies and articles, but in meetings he stayed quiet because he was afraid of making mistakes. One day, his manager suggested that he practise with short daily conversations. Faisal started talking to himself in English while driving, and he joined an online group. After three months, he felt much more confident. He realised that people care more about the message than about perfect grammar.",
+     qs:[["Why did Faisal stay quiet in meetings?",["He was bored","He was afraid of mistakes","He didn't understand"],1],["What did he do while driving?",["Listened to music","Talked to himself in English","Called his manager"],1],["What did Faisal realise?",["Grammar is everything","The message matters more than perfect grammar","Meetings are useless"],1]]},
+    writing:["Do you prefer working from home or in an office? Explain why.","Write an email to your manager asking for a day off.","Describe a problem you solved recently."],
+    chat:"You are a colleague at work. Chat with the learner about their weekend plans and ask their opinion on a new office schedule."
+   },
+   B2:{title:"فوق المتوسط", desc:"نقاش، إقناع، مواقف رسمية وتعبير طليق",
+    phrases:[
+     ["To be honest, I have mixed feelings about it.","بصراحة، عندي مشاعر متضاربة تجاهها."],
+     ["That's a fair point, but have you considered…?","نقطة وجيهة، بس هل فكرت في…؟"],
+     ["I'd rather not commit to that yet.","أفضل ما ألتزم بهذا حاليًا."],
+     ["It's not as simple as it sounds.","مو بالبساطة اللي تبين."],
+     ["What I'm trying to say is…","اللي أبغى أقوله هو…"],
+     ["Let's weigh the pros and cons.","خلنا نوزن الإيجابيات والسلبيات."],
+     ["I couldn't agree more.","أوافقك تمامًا."],
+     ["If I had known, I would have told you.","لو كنت أدري، كان قلت لك."],
+     ["It's worth giving it a try.","تستاهل نجربها."],
+     ["Could you elaborate on that?","ممكن توضح أكثر؟"],
+     ["We need to find a middle ground.","لازم نلقى حل وسط."],
+     ["I'll keep that in mind.","بحطها في بالي."]
+    ],
+    words:[["significant","كبير / مهم"],["approach","أسلوب / طريقة"],["reluctant","متردد"],["consequence","عاقبة / نتيجة"],["assume","يفترض"],["sustainable","مستدام"],["thorough","شامل / دقيق"],["persuade","يقنع"],["obstacle","عقبة"],["inevitable","حتمي"],["acknowledge","يعترف بـ"],["nevertheless","ومع ذلك"]],
+    reading:{title:"The Value of Mistakes",text:"Researchers who study language learning have noticed a consistent pattern: learners who are willing to make mistakes tend to progress faster than those who wait until they feel ready. Speaking before you are fully prepared forces your brain to retrieve words under pressure, which strengthens memory. Moreover, each mistake gives you feedback that silent study cannot provide. Nevertheless, many adults are reluctant to speak because they associate errors with embarrassment. Changing this mindset, and seeing mistakes as evidence of effort rather than failure, may be the most significant step a learner can take.",
+     qs:[["According to the text, who progresses faster?",["Those who wait until ready","Those willing to make mistakes","Those who only read"],1],["Why does speaking early help memory?",["It forces retrieval under pressure","It is more fun","It avoids feedback"],0],["What mindset change is recommended?",["Avoid errors at all costs","See mistakes as evidence of effort","Study silently longer"],1]]},
+    writing:["Should social media be banned for children under 14? Give arguments for both sides.","Write a formal complaint about a delayed delivery.","Describe a time you changed your mind about something important."],
+    chat:"You are a friendly debate partner. Discuss with the learner whether remote work is better than office work. Ask follow-up questions and challenge them gently."
+   }
+  },
+  test:[
+   ["A1","___ name is Ahmed.",["My","I","Me"],0],
+   ["A1","She ___ a teacher.",["are","is","am"],1],
+   ["A1","What is the opposite of “big”?",["tall","small","long"],1],
+   ["A1","I ___ coffee every morning.",["drinks","drink","drinking"],1],
+   ["A2","I ___ to the beach last Friday.",["go","went","going"],1],
+   ["A2","There aren't ___ eggs in the fridge.",["some","any","much"],1],
+   ["A2","She is ___ than her brother.",["tall","taller","tallest"],1],
+   ["A2","“How long does it take?” means you are asking about…",["price","time","distance only"],1],
+   ["B1","I have lived here ___ 2019.",["for","since","from"],1],
+   ["B1","If it rains tomorrow, we ___ stay home.",["would","will","are"],1],
+   ["B1","“Would you mind opening the door?” — The polite answer is:",["Yes, I mind.","Not at all.","I would."],1],
+   ["B1","The meeting was ___ because the manager was sick.",["called off","called up","called in"],0],
+   ["B2","If I ___ known, I would have helped you.",["have","had","would"],1],
+   ["B2","He is reluctant to sign. “Reluctant” means:",["eager","unwilling","confused"],1],
+   ["B2","Hardly ___ arrived when the phone rang.",["I had","had I","I have"],1],
+   ["B2","Choose the most natural: “Let's ___ the pros and cons.”",["weigh","measure","count"],0]
+  ]
+ }
+};
+const LEVELS=["A1","A2","B1","B2"];
+
+/* ============ الحالة ============ */
+const KEY="darbi-v1";
+let S={lang:"en",level:null,known:{},done:{},streak:0,lastDay:null};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)S=Object.assign(S,s)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function touchDay(){const d=new Date().toISOString().slice(0,10);if(S.lastDay===d)return;const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.streak=S.lastDay===y?S.streak+1:1;S.lastDay=d;save()}
+const C=()=>COURSES[S.lang];
+const L=()=>C().levels[S.level||"A1"];
+
+let view="home", sub=null, sampleFn=null;
+(async()=>{try{if(window.claude?.use){sampleFn=await window.claude.use("sample");render()}}catch(e){}})();
+
+/* ============ أدوات ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200)}
+const IC={
+ spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>',
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+ book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg>',
+ mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+ pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>'
+};
+let voice=null;
+function pickVoice(){try{const v=speechSynthesis.getVoices();voice=v.find(x=>x.lang===C().ttsLang&&/Samantha|Google|Natural/i.test(x.name))||v.find(x=>x.lang&&x.lang.startsWith(C().ttsLang.slice(0,2)))||null}catch(e){}}
+try{speechSynthesis.onvoiceschanged=pickVoice;pickVoice()}catch(e){}
+function say(text,rate=0.95){
+ try{if(!("speechSynthesis" in window))throw 0;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text.replace(/…/g,""));u.lang=C().ttsLang;u.rate=rate;if(voice)u.voice=voice;speechSynthesis.speak(u)}
+ catch(e){toast("النطق الصوتي غير متاح في هذا المتصفح")}
+}
+const spkBtn=(t,label="استمع")=>`<button class="speak" data-say="${esc(t)}" aria-label="${label}">${IC.spk}</button>`;
+function progress(lv,kind){const n=kind==="phrases"?C().levels[lv].phrases.length:C().levels[lv].words.length;const k=Object.keys(S.known).filter(x=>x.startsWith(lv+":"+kind+":")).length;return Math.round(k/n*100)}
+
+/* ============ التعرف على الصوت ============ */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,recLive=false,heard=null;
+const norm=t=>t.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9' ]/g," ").split(/\s+/).filter(Boolean);
+function listen(onText){
+ if(!SR){toast("التعرف على الصوت غير مدعوم هنا. جرّب Chrome أو Safari");return}
+ if(recLive){try{rec.stop()}catch(e){}return}
+ try{speechSynthesis.cancel()}catch(e){}
+ rec=new SR();rec.lang=C().ttsLang;rec.interimResults=false;rec.maxAlternatives=3;
+ rec.onresult=e=>{const alts=[...e.results[0]].map(a=>a.transcript);onText(alts)};
+ rec.onerror=e=>{toast(e.error==="not-allowed"?"اسمح للمتصفح باستخدام المايك من الإعدادات":e.error==="no-speech"?"ما سمعت شي، حاول مرة ثانية":"تعذر سماعك، حاول مرة ثانية")};
+ rec.onend=()=>{recLive=false;render()};
+ try{rec.start();recLive=true;render()}catch(e){toast("تعذر تشغيل المايك")}
+}
+function scoreSpeech(target,alts){
+ const want=norm(target);let best=null;
+ alts.forEach(a=>{const got=norm(a);const pool=[...got];const marks=want.map(w=>{const i=pool.indexOf(w);if(i>-1){pool.splice(i,1);return 1}return 0});const sc=Math.round(marks.reduce((x,y)=>x+y,0)/want.length*100);if(!best||sc>best.score)best={score:sc,marks,said:a}});
+ return best;
+}
+function heardView(target){
+ if(!heard||heard.target!==target)return "";
+ const words=target.split(/\s+/);const w=norm(target);let k=0;
+ const html=words.map(raw=>{const n=norm(raw);if(!n.length)return esc(raw);const ok=heard.r.marks[k++];return `<span class="wd ${ok?"ok":"miss"}">${esc(raw)}</span>`}).join(" ");
+ const msg=heard.r.score>=90?"ممتاز! نطقك واضح":heard.r.score>=60?"حلو، ركز على الكلمات المظللة بالأحمر":"قريب، اسمعها ببطء وجرب مرة ثانية";
+ return `<div class="feedback" style="background:var(--teal-soft)"><b>${heard.r.score}%</b> · ${msg}<div class="en" style="margin-top:6px;line-height:2">${html}</div><div class="muted en">I heard: “${esc(heard.r.said)}”</div></div>`;
+}
+const micBtn=(id,label)=>SR?`<button class="btn mic ${recLive?"live":""}" id="${id}">${recLive?"أسمعك… اضغط للإيقاف":label}</button>`:"";
+
+/* ============ الشاشات ============ */
+function render(){
+ const a=$("#app");
+ if(view==="test"){a.innerHTML=testView();bindTest();return tabs()}
+ if(!S.level&&view!=="home"){view="home"}
+ const fn={home:homeView,read:readView,speak:speakView,write:writeView}[view];
+ a.innerHTML=fn();bind();tabs();
+}
+function tabs(){
+ const t=[["home","الرئيسية",IC.home],["read","قراءة",IC.book],["speak","تحدث",IC.mic],["write","كتابة",IC.pen]];
+ $("#tabs").hidden=view==="test";
+ $("#tabs").innerHTML=t.map(([k,n,i])=>`<button class="tab ${view===k?"on":""}" data-tab="${k}">${i}<span>${n}</span></button>`).join("");
+ $("#tabs").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{if(!S.level&&b.dataset.tab!=="home"){toast("ابدأ باختبار تحديد المستوى أولاً");return}view=b.dataset.tab;sub=null;render();scrollTo(0,0)});
+}
+function hdr(){return `<header class="top"><div><div class="eyebrow">دربي · ${C().name}</div><h1>${view==="home"?"تعلّم بدون خجل":{read:"القراءة والمفردات",speak:"التحدث",write:"الكتابة"}[view]}</h1></div>${S.level?`<button class="lvl-pill" id="chgLvl" aria-label="تغيير المستوى">${S.level}</button>`:""}</header>`}
+
+function homeView(){
+ if(!S.level) return hdr()+`
+ <section class="card hero"><div class="eyebrow">الخطوة الأولى</div><h2>اختبار تحديد المستوى</h2>
+ <p>16 سؤال قصير، تقريبًا 5 دقائق. على نتيجتك نبدأ معك من المستوى المناسب، من A1 (مبتدئ) إلى B2 (فوق المتوسط).</p>
+ <button class="btn primary" id="startTest">ابدأ الاختبار</button></section>
+ <section class="card"><h3>وش بتلقى هنا؟</h3>
+ <div class="phrase"><div class="txt"><b>قراءة ومفردات</b><span class="muted">جمل وكلمات من الحياة اليومية، وقطعة قراءة مع أسئلة.</span></div></div>
+ <div class="phrase"><div class="txt"><b>تحدث بدون ضغط</b><span class="muted">اسمع الجملة، كررها بصوتك، ودرّب نفسك على مواقف حقيقية.</span></div></div>
+ <div class="phrase"><div class="txt"><b>كتابة مع تصحيح</b><span class="muted">اكتب جملك وخذ ملاحظات تساعدك تتحسن.</span></div></div></section>
+ <section class="card"><div class="eyebrow">مثال من المستوى A1</div>
+ <div class="phrase">${spkBtn("Nice to meet you.")}<div class="txt"><span class="en">Nice to meet you.</span><span class="muted">تشرفت بمعرفتك.</span></div></div></section>`;
+ const lv=S.level, l=L(), next=LEVELS[LEVELS.indexOf(lv)+1];
+ const pp=progress(lv,"phrases"), pw=progress(lv,"words");
+ const today=l.phrases[(new Date().getDate())%l.phrases.length];
+ return hdr()+`
+ <section class="card hero"><div class="eyebrow">مستواك: ${lv} · ${l.title}</div><h2>جملة اليوم</h2>
+ <div class="phrase" style="border:0;padding:0">${spkBtn(today[0])}<div class="txt"><span class="en">${esc(today[0])}</span><span class="muted">${today[1]}</span></div></div>
+ <p class="muted">قلها بصوت عالي ثلاث مرات اليوم، حتى لو لحالك. التكرار يكسر الحاجز.</p></section>
+ <div class="grid2">
+  <button class="tile" data-go="read" data-sub="phrases"><b>الجمل</b><span class="muted">${l.phrases.length} جملة يومية</span><span class="bar"><i style="width:${pp}%"></i></span></button>
+  <button class="tile" data-go="read" data-sub="words"><b>الكلمات</b><span class="muted">${l.words.length} كلمة</span><span class="bar"><i style="width:${pw}%"></i></span></button>
+  <button class="tile" data-go="speak"><b>تحدث</b><span class="muted">استمع وكرر + محادثة</span></button>
+  <button class="tile" data-go="write"><b>اكتب</b><span class="muted">${l.writing.length} مواضيع</span></button>
+ </div>
+ <section class="card"><div class="row" style="justify-content:space-between;align-items:center"><div><b>${S.streak||0} يوم</b> <span class="muted">متتالي</span></div>
+ ${next&&pp>=80&&pw>=80?`<button class="btn sun" id="nextLvl">انتقل إلى ${next}</button>`:`<span class="muted">${next?`احفظ 80% من الجمل والكلمات لتنتقل إلى ${next}`:"وصلت أعلى مستوى هنا"}</span>`}</div></section>
+ <button class="btn" id="startTest">أعد اختبار تحديد المستوى</button>`;
+}
+
+function readView(){
+ const l=L(), lv=S.level;
+ if(sub==="phrases"||sub==="words"){
+  const list=l[sub];
+  return hdr()+`<button class="back" data-sub="">→ رجوع</button><section class="card"><h2>${sub==="phrases"?"جمل يومية":"كلمات أساسية"} · ${lv}</h2><p class="muted">اضغط السماعة لتسمع النطق، وعلّم "حفظتها" لما تتقنها.</p>
+  ${list.map((p,i)=>{const id=`${lv}:${sub}:${i}`;return `<div class="phrase">${spkBtn(p[0])}<div class="txt"><span class="en">${esc(p[0])}</span><span class="muted">${p[1]}</span></div><button class="chk ${S.known[id]?"on":""}" data-known="${id}">${S.known[id]?"✓ حفظتها":"حفظتها"}</button></div>`}).join("")}</section>`;
+ }
+ if(sub==="cards") return hdr()+cardsView();
+ const r=l.reading;
+ return hdr()+`
+ <div class="grid2"><button class="tile" data-sub="phrases"><b>الجمل</b><span class="bar"><i style="width:${progress(lv,"phrases")}%"></i></span></button>
+ <button class="tile" data-sub="words"><b>الكلمات</b><span class="bar"><i style="width:${progress(lv,"words")}%"></i></span></button></div>
+ <button class="btn sun" data-sub="cards">بطاقات مراجعة سريعة</button>
+ <section class="card"><div class="eyebrow">قطعة قراءة · ${lv}</div><h2 class="en">${r.title}</h2>
+ <div class="row"><button class="btn" data-say="${esc(r.text)}">استمع للقطعة</button><button class="btn" data-sayslow="${esc(r.text)}">ببطء</button></div>
+ <p class="passage">${esc(r.text)}</p></section>
+ <section class="card"><h3>أسئلة الفهم</h3>
+ ${r.qs.map((q,i)=>`<div style="display:flex;flex-direction:column;gap:8px"><p class="en"><b>${i+1}. ${esc(q[0])}</b></p>${q[1].map((o,j)=>`<button class="opt" data-rq="${i}" data-ro="${j}">${esc(o)}</button>`).join("")}</div>`).join("")}</section>`;
+}
+let cardIdx=0,cardFlip=false,cardDeck=[];
+function cardsView(){
+ if(!cardDeck.length){const l=L();cardDeck=[...l.phrases,...l.words].sort(()=>Math.random()-.5)}
+ const c=cardDeck[cardIdx%cardDeck.length];
+ return `<button class="back" data-sub="">→ رجوع</button>
+ <p class="muted">بطاقة ${cardIdx%cardDeck.length+1} من ${cardDeck.length}. حاول تتذكر المعنى، ثم اضغط البطاقة.</p>
+ <section class="card flash" id="flash"><div class="big">${esc(c[0])}</div>${cardFlip?`<div style="font-size:1.2rem">${c[1]}</div>`:`<div class="muted">اضغط لإظهار المعنى</div>`}</section>
+ <div class="row"><button class="btn" data-say="${esc(c[0])}">استمع</button><button class="btn primary" id="nextCard">التالي</button></div>`;
+}
+
+let shIdx=0,shStep=0,chatLog=[],chatBusy=false;
+function speakView(){
+ const l=L();
+ if(sub==="chat") return hdr()+chatView();
+ const p=l.phrases[shIdx%l.phrases.length];
+ return hdr()+`
+ <section class="card"><div class="eyebrow">تمرين الظل (Shadowing)</div><h2>اسمع، كرر، ثبّت</h2>
+ <div class="steps"><span class="${shStep===0?"on":""}">١ اسمع</span><span class="${shStep===1?"on":""}">٢ كرر بصوتك</span><span class="${shStep===2?"on":""}">٣ بدون نص</span></div>
+ ${shStep<2?`<p class="en" style="font-size:1.3rem;font-weight:500">${esc(p[0])}</p><p class="muted">${p[1]}</p>`:`<p class="muted">النص مخفي. قل الجملة من ذاكرتك، ثم اسمع وتأكد.</p><p style="font-size:1.1rem">${p[1]}</p>`}
+ <div class="row"><button class="btn" data-say="${esc(p[0])}">استمع</button><button class="btn" data-sayslow="${esc(p[0])}">ببطء</button></div>
+ <p class="muted">${["اسمعها مرتين وركز على اللحن والتشديد.","قلها بصوت عالي مع الصوت أو بعده مباشرة. لا تخاف من الغلط.","حاول تقولها كاملة بدون ما تشوفها."][shStep]}</p>
+ ${micBtn("shMic","🎤 قلها وأنا أسمعك")}${heardView(p[0])}
+ <div class="row">${shStep<2?`<button class="btn primary" id="shNext">قلتها، التالي ←</button>`:`<button class="btn" id="shHard">صعبة، أعيدها</button><button class="btn primary" id="shEasy">قلتها صح</button>`}</div>
+ <p class="muted">جملة ${shIdx%l.phrases.length+1} من ${l.phrases.length}</p></section>
+ <section class="card hero"><div class="eyebrow">محادثة تدريبية</div><h3>تكلم بموقف حقيقي بدون أحد يحكم عليك</h3>
+ <p class="muted">اكتب ردك بالإنجليزي واقرأه بصوت عالي قبل ترسله. الطرف الثاني يرد ويصحح لك بلطف.</p>
+ <button class="btn primary" data-sub="chat">ابدأ المحادثة</button></section>
+ <section class="card"><h3>نصائح لكسر حاجز الخجل</h3>
+ <div class="phrase"><div class="txt"><b>كلّم نفسك</b><span class="muted">صف اللي تسويه بالإنجليزي وأنت تسوق أو تطبخ: "I'm making tea now".</span></div></div>
+ <div class="phrase"><div class="txt"><b>سجّل صوتك</b><span class="muted">سجّل جملة اليوم بمسجل الجوال وقارنها بالنطق هنا.</span></div></div>
+ <div class="phrase"><div class="txt"><b>الرسالة أهم من القواعد</b><span class="muted">الناس تهتم تفهمك، مو تصحح لك. جملة ناقصة أفضل من صمت.</span></div></div></section>`;
+}
+function chatView(){
+ if(!sampleFn) return `<button class="back" data-sub="">→ رجوع</button><section class="card"><h3>المحادثة غير متاحة هنا</h3><p class="muted">المحادثة التدريبية تحتاج تفتح الصفحة وأنت مسجل دخول في Claude. تقدر تكمل تمرين الظل والقراءة عادي.</p></section>`;
+ return `<button class="back" data-sub="">→ رجوع</button>
+ <section class="card"><div class="eyebrow">موقف · ${S.level}</div><p class="muted en">${esc(L().chat)}</p>
+ <div class="chat" id="chat">${chatLog.map(m=>`<div class="bubble ${m.role==="user"?"me":"bot"}">${esc(m.content)}${m.role!=="user"?` <button class="speak" style="width:32px;height:32px;display:inline-grid;vertical-align:middle" data-say="${esc(m.content.split("\n✏️")[0])}" aria-label="استمع">${IC.spk}</button>`:""}</div>`).join("")||`<p class="muted">جاري بدء المحادثة…</p>`}</div>
+ <form class="row" id="chatForm"><input type="text" id="chatIn" placeholder="Type in English…" autocomplete="off" ${chatBusy?"disabled":""}><button class="btn primary" ${chatBusy?"disabled":""}>أرسل</button></form>${micBtn("chatMic","🎤 تكلم بدل ما تكتب")}
+ <button class="btn" id="chatReset">موقف جديد</button></section>`;
+}
+async function chatTurn(userText){
+ if(!sampleFn||chatBusy)return;
+ if(userText)chatLog.push({role:"user",content:userText});
+ chatBusy=true;render();
+ const sys=`Role-play for an English learner at CEFR level ${S.level}. Scenario: ${L().chat}
+Rules: reply in 1-3 short sentences using vocabulary suitable for ${S.level}. Always end with a simple question to keep them talking. Be warm and encouraging. If the learner's last message had a mistake, add a new line starting with "✏️ " followed by the corrected sentence (English only, no explanation). Never use Arabic.`;
+ const msgs=[{role:"user",content:sys+"\n\nStart the conversation now."}];
+ chatLog.forEach(m=>msgs.push({role:m.role,content:m.content}));
+ if(msgs.length>1&&msgs[msgs.length-1].role!=="user")msgs.push({role:"user",content:"(continue)"});
+ try{const r=await sampleFn(msgs.length===1?msgs[0].content:msgs,{modelTier:"quick",cache:false});chatLog.push({role:"assistant",content:r.text.trim()})}
+ catch(e){toast(e?.code==="rate_limited"?"كثرت الرسائل، انتظر دقيقة وجرب":"تعذر الرد الآن")}
+ chatBusy=false;render();const c=$("#chat");if(c)c.scrollTop=c.scrollHeight;$("#chatIn")?.focus();
+}
+
+let wIdx=0,wFeedback="",wBusy=false,wDraft="";
+function writeView(){
+ const l=L(), prompt=l.writing[wIdx%l.writing.length];
+ return hdr()+`
+ <section class="card"><div class="eyebrow">موضوع ${wIdx%l.writing.length+1} من ${l.writing.length} · ${S.level}</div>
+ <p class="en" style="font-weight:500">${esc(prompt)}</p>
+ <textarea id="wText" placeholder="Start writing here…">${esc(wDraft)}</textarea>
+ <div class="row"><button class="btn primary" id="wCheck" ${wBusy?"disabled":""}>${wBusy?"جاري التصحيح…":"صحح كتابتي"}</button><button class="btn" id="wNext">موضوع آخر</button></div>
+ ${wFeedback?`<div class="feedback">${esc(wFeedback)}</div><button class="btn" data-say="${esc((wFeedback.match(/✅\s*([\s\S]*?)(\n\n|$)/)||[])[1]||"")}">استمع للنسخة المصححة</button>`:""}
+ ${!sampleFn?`<p class="muted">التصحيح التلقائي يحتاج تكون مسجل دخول في Claude. بدونه، اقرأ ما كتبت بصوت عالي وقارنه بالجمل في قسم القراءة.</p>`:""}</section>
+ <section class="card"><h3>جمل تساعدك</h3>${l.phrases.slice(0,4).map(p=>`<div class="phrase">${spkBtn(p[0])}<div class="txt"><span class="en">${esc(p[0])}</span><span class="muted">${p[1]}</span></div></div>`).join("")}</section>`;
+}
+async function checkWriting(){
+ const t=$("#wText").value.trim();wDraft=t;
+ if(t.length<5){toast("اكتب جملة أو أكثر أولاً");return}
+ if(!sampleFn){toast("التصحيح غير متاح هنا");return}
+ wBusy=true;render();
+ const prompt=L().writing[wIdx%L().writing.length];
+ try{
+  const r=await sampleFn(`You are a kind English teacher for an Arabic-speaking (Saudi) learner at CEFR level ${S.level}.
+Task given: "${prompt}"
+Learner wrote:
+"""${t}"""
+Reply in this exact format, Arabic for explanations:
+✅ <the full corrected English text, natural for level ${S.level}>
+
+📝 الملاحظات:
+- <up to 3 short points in Arabic explaining the main mistakes, quoting the wrong and right English words>
+
+💡 جملة إضافية تقدر تستخدمها: <one useful English sentence for this topic>
+
+🌟 <one short encouraging line in Arabic>`,{modelTier:"quick"});
+  wFeedback=r.text.trim();touchDay();
+ }catch(e){toast(e?.code==="rate_limited"?"انتظر دقيقة وجرب مرة ثانية":"تعذر التصحيح الآن")}
+ wBusy=false;render();
+}
+
+/* ============ الاختبار ============ */
+let tIdx=0,tAns=[],tPicked=null;
+function testView(){
+ const T=C().test;
+ if(tIdx>=T.length){
+  const score=tAns.filter(Boolean).length;
+  const per=LEVELS.map(lv=>T.map((q,i)=>q[0]===lv&&tAns[i]).filter(Boolean).length);
+  let lv="A1";for(let i=0;i<LEVELS.length;i++){if(per[i]>=3)lv=LEVELS[i];else break}
+  if(lv==="A1"&&score>=6)lv="A2";
+  testView.result=lv;
+  return `<section class="card hero" style="text-align:center;align-items:center"><div class="eyebrow">نتيجتك</div><div class="result-num">${lv}</div><h2>${C().levels[lv].title}</h2><p>أجبت ${score} من ${T.length} صح.</p><p class="muted">${C().levels[lv].desc}</p></section>
+  <section class="card"><h3>التفصيل حسب المستوى</h3>${LEVELS.map((l,i)=>`<div class="row" style="justify-content:space-between"><span class="en">${l}</span><span>${per[i]} / 4</span></div>`).join("")}</section>
+  <button class="btn primary" id="tDone">ابدأ التعلم من ${lv}</button>
+  <label class="muted" for="lvSel">أو اختر مستوى بنفسك:</label><select id="lvSel">${LEVELS.map(l=>`<option ${l===lv?"selected":""}>${l}</option>`).join("")}</select>`;
+ }
+ const q=T[tIdx];
+ return `<header class="top"><div><div class="eyebrow">اختبار تحديد المستوى</div><h1>سؤال ${tIdx+1} من ${T.length}</h1></div><button class="back" id="tExit">خروج</button></header>
+ <div class="prog"><i style="width:${tIdx/T.length*100}%"></i></div>
+ <section class="card"><p class="muted">اختر الإجابة الصحيحة. إذا ما تعرف، اختر "ما أعرف" بدل التخمين.</p>
+ <p class="en" style="font-size:1.25rem;font-weight:500">${esc(q[1])}</p>
+ ${q[2].map((o,j)=>`<button class="opt ${tPicked!==null?(j===q[3]?"right":j===tPicked?"wrong":""):""}" data-t="${j}" ${tPicked!==null?"disabled":""}>${esc(o)}</button>`).join("")}
+ <button class="btn" data-t="-1" ${tPicked!==null?"disabled":""}>ما أعرف</button>
+ ${tPicked!==null?`<button class="btn primary" id="tNext">${tIdx+1<T.length?"التالي":"شوف النتيجة"}</button>`:""}</section>`;
+}
+function bindTest(){
+ document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const j=+b.dataset.t;tPicked=j;tAns[tIdx]=j===C().test[tIdx][3];if(j===-1){tIdx++;tPicked=null}render()});
+ $("#tNext")&&($("#tNext").onclick=()=>{tIdx++;tPicked=null;render();scrollTo(0,0)});
+ $("#tExit")&&($("#tExit").onclick=()=>{view="home";render()});
+ $("#tDone")&&($("#tDone").onclick=()=>{S.level=$("#lvSel").value||testView.result;save();touchDay();view="home";render();scrollTo(0,0)});
+}
+
+/* ============ الربط ============ */
+function bind(){
+ document.querySelectorAll("[data-say]").forEach(b=>b.onclick=e=>{e.stopPropagation();say(b.dataset.say)});
+ document.querySelectorAll("[data-sayslow]").forEach(b=>b.onclick=()=>say(b.dataset.sayslow,.65));
+ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{view=b.dataset.go;sub=b.dataset.sub||null;render();scrollTo(0,0)});
+ document.querySelectorAll("[data-sub]:not([data-go])").forEach(b=>b.onclick=()=>{sub=b.dataset.sub||null;if(sub==="cards"){cardDeck=[];cardIdx=0;cardFlip=false}if(sub==="chat"&&!chatLog.length&&sampleFn){render();chatTurn(null);return}render();scrollTo(0,0)});
+ document.querySelectorAll("[data-known]").forEach(b=>b.onclick=()=>{const id=b.dataset.known;if(S.known[id])delete S.known[id];else S.known[id]=1;touchDay();save();render()});
+ document.querySelectorAll("[data-rq]").forEach(b=>b.onclick=()=>{const q=L().reading.qs[+b.dataset.rq];const ok=+b.dataset.ro===q[2];b.classList.add(ok?"right":"wrong");toast(ok?"صح، ممتاز":"حاول مرة ثانية");if(ok)touchDay()});
+ $("#startTest")&&($("#startTest").onclick=()=>{tIdx=0;tAns=[];tPicked=null;view="test";render();scrollTo(0,0)});
+ $("#chgLvl")&&($("#chgLvl").onclick=()=>{const i=(LEVELS.indexOf(S.level)+1)%LEVELS.length;S.level=LEVELS[i];save();chatLog=[];wFeedback="";toast("المستوى الآن "+S.level);render()});
+ $("#nextLvl")&&($("#nextLvl").onclick=()=>{S.level=LEVELS[LEVELS.indexOf(S.level)+1];save();toast("مبروك! انتقلت إلى "+S.level);render()});
+ $("#flash")&&($("#flash").onclick=()=>{cardFlip=!cardFlip;render()});
+ $("#nextCard")&&($("#nextCard").onclick=()=>{cardIdx++;cardFlip=false;render()});
+ $("#shNext")&&($("#shNext").onclick=()=>{shStep++;render()});
+ $("#shHard")&&($("#shHard").onclick=()=>{shStep=0;render()});
+ $("#shEasy")&&($("#shEasy").onclick=()=>{shStep=0;shIdx++;heard=null;touchDay();toast("أحسنت!");render()});
+ $("#chatForm")&&($("#chatForm").onsubmit=e=>{e.preventDefault();const v=$("#chatIn").value.trim();if(v)chatTurn(v)});
+ $("#chatReset")&&($("#chatReset").onclick=()=>{chatLog=[];chatTurn(null)});
+ $("#shMic")&&($("#shMic").onclick=()=>{const p=L().phrases[shIdx%L().phrases.length][0];listen(alts=>{heard={target:p,r:scoreSpeech(p,alts)};if(heard.r.score>=90)touchDay()})});
+ $("#chatMic")&&($("#chatMic").onclick=()=>listen(alts=>{const i=$("#chatIn");if(i){i.value=alts[0];}chatTurn(alts[0])}));
+ $("#wText")&&($("#wText").oninput=e=>wDraft=e.target.value);
+ $("#wCheck")&&($("#wCheck").onclick=checkWriting);
+ $("#wNext")&&($("#wNext").onclick=()=>{wIdx++;wFeedback="";wDraft="";render()});
+}
+render();
+</script>
+</body>
+</html>
