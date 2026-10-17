@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#1F6F63"/>
+  <circle cx="404" cy="112" r="34" fill="#E8A317"/>
+  <path d="M120 150h272a40 40 0 0 1 40 40v130a40 40 0 0 1-40 40H230l-70 58v-58h-40a40 40 0 0 1-40-40V190a40 40 0 0 1 40-40z" fill="#F4F7F5"/>
+  <text x="256" y="300" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-weight="700" font-size="130" fill="#1F6F63">Hi</text>
+</svg>

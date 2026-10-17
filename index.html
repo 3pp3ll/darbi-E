@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1F6F63">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="دربي">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <style>:root{padding-top:env(safe-area-inset-top,0px)}body{margin:0}[hidden]{display:none!important}</style>
 <title>دربي للإنجليزي</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -92,6 +98,9 @@ select{font:inherit;padding:10px;border-radius:12px;border:1px solid var(--line)
 .wd.miss{background:var(--bad-soft);text-decoration:underline wavy var(--bad)}
 .btn.mic{background:var(--bad);border-color:var(--bad);color:var(--bg)}
 .btn.mic.live{animation:pulse 1s infinite}
+input[type=time]{font-family:var(--f-en);font-size:1.1rem;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:48px}
+a.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.nudge{background:var(--sun-soft);border:1px solid var(--sun)}
 @keyframes pulse{50%{opacity:.6}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -278,6 +287,24 @@ function heardView(target){
 }
 const micBtn=(id,label)=>SR?`<button class="btn mic ${recLive?"live":""}" id="${id}">${recLive?"أسمعك… اضغط للإيقاف":label}</button>`:"";
 
+/* ============ تذكير الدرس ============ */
+function remTime(){return S.remind||"20:00"}
+function pad(n){return String(n).padStart(2,"0")}
+function nextStart(){const [h,m]=remTime().split(":").map(Number);const d=new Date();d.setHours(h,m,0,0);if(d<new Date())d.setDate(d.getDate()+1);return d}
+function stamp(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"T"+pad(d.getHours())+pad(d.getMinutes())+"00"}
+function gcalLink(){const s=nextStart(),e=new Date(s.getTime()+15*6e4);
+ return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("درس الإنجليزي - دربي")+"&dates="+stamp(s)+"/"+stamp(e)+"&ctz=Asia/Riyadh&recur="+encodeURIComponent("RRULE:FREQ=DAILY")+"&details="+encodeURIComponent("15 دقيقة: جملة اليوم + تمرين النطق\n"+location.href.split("#")[0])}
+function icsFile(){const s=nextStart(),e=new Date(s.getTime()+15*6e4);
+ const t=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Darbi//AR","BEGIN:VEVENT","UID:darbi-daily-lesson@darbi","DTSTAMP:"+stamp(new Date()),"DTSTART:"+stamp(s),"DTEND:"+stamp(e),"RRULE:FREQ=DAILY","SUMMARY:درس الإنجليزي - دربي","DESCRIPTION:15 دقيقة: جملة اليوم + تمرين النطق","URL:"+location.href.split("#")[0],"BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:وقت درس الإنجليزي","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/calendar"}));a.download="darbi-reminder.ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
+function studiedToday(){return S.lastDay===new Date().toISOString().slice(0,10)}
+function remindCard(){const [h,m]=remTime().split(":").map(Number);const late=new Date().getHours()*60+new Date().getMinutes()>=h*60+m;
+ return `${late&&!studiedToday()?`<section class="card nudge"><b>حان وقت درسك ⏰</b><p class="muted">ما تدربت اليوم للحين. 5 دقائق بس تكفي، ابدأ بجملة اليوم.</p><button class="btn primary" data-go="speak">ابدأ الآن</button></section>`:""}
+ <section class="card"><div class="eyebrow">تذكير يومي</div><h3>موعد درسك</h3>
+ <div class="row" style="align-items:center"><label for="remT" class="muted">الوقت:</label><input type="time" id="remT" value="${remTime()}"></div>
+ <p class="muted">أضف الموعد لتقويم جوالك، ويجيك تنبيه كل يوم بنفس الوقت حتى لو الصفحة مقفلة.</p>
+ <div class="row"><a class="btn primary" id="gcal" href="${gcalLink()}" target="_blank" rel="noopener">أضف لتقويم Google</a><button class="btn" id="icsBtn">ملف تقويم</button></div></section>`}
+
 /* ============ الشاشات ============ */
 function render(){
  const a=$("#app");
@@ -318,6 +345,7 @@ function homeView(){
   <button class="tile" data-go="speak"><b>تحدث</b><span class="muted">استمع وكرر + محادثة</span></button>
   <button class="tile" data-go="write"><b>اكتب</b><span class="muted">${l.writing.length} مواضيع</span></button>
  </div>
+ ${remindCard()}
  <section class="card"><div class="row" style="justify-content:space-between;align-items:center"><div><b>${S.streak||0} يوم</b> <span class="muted">متتالي</span></div>
  ${next&&pp>=80&&pw>=80?`<button class="btn sun" id="nextLvl">انتقل إلى ${next}</button>`:`<span class="muted">${next?`احفظ 80% من الجمل والكلمات لتنتقل إلى ${next}`:"وصلت أعلى مستوى هنا"}</span>`}</div></section>
  <button class="btn" id="startTest">أعد اختبار تحديد المستوى</button>`;
@@ -484,11 +512,14 @@ function bind(){
  $("#chatReset")&&($("#chatReset").onclick=()=>{chatLog=[];chatTurn(null)});
  $("#shMic")&&($("#shMic").onclick=()=>{const p=L().phrases[shIdx%L().phrases.length][0];listen(alts=>{heard={target:p,r:scoreSpeech(p,alts)};if(heard.r.score>=90)touchDay()})});
  $("#chatMic")&&($("#chatMic").onclick=()=>listen(alts=>{const i=$("#chatIn");if(i){i.value=alts[0];}chatTurn(alts[0])}));
+ $("#remT")&&($("#remT").onchange=e=>{S.remind=e.target.value||"20:00";save();render();toast("الموعد صار "+S.remind+"، أضفه للتقويم من جديد")});
+ $("#icsBtn")&&($("#icsBtn").onclick=icsFile);
  $("#wText")&&($("#wText").oninput=e=>wDraft=e.target.value);
  $("#wCheck")&&($("#wCheck").onclick=checkWriting);
  $("#wNext")&&($("#wNext").onclick=()=>{wIdx++;wFeedback="";wDraft="";render()});
 }
 render();
+if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 </script>
 </body>
 </html>
