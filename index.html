@@ -521,6 +521,9 @@ function bind(){
 render();
 if("serviceWorker" in navigator&&location.protocol==="https:"){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 </script>
+<script src="ref.js" data-platform="darbi" data-base="https://3pp3ll.github.io/darbi-E/"></script>
+<script>/* دربي ما فيه حسابات: أول بداية فعلية (ابدأ الآن أو اختبار المستوى) تنحسب «تسجيل» لرابط الإحالة */
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest('[data-go="speak"],#startTest');if(!b||!window.REF)return;try{if(localStorage.getItem("darbi.started"))return;localStorage.setItem("darbi.started","1")}catch(x){}REF.signup()});</script>
 <script src="install.js" data-name="دربي" data-key="darbi" data-sw="none"></script>
 </body>
 </html>
